@@ -46,5 +46,12 @@ describe('longueur zone Validator', () => {
         expect(result).toBe(null);
     });
 
+    it("#13 | Une phrase avec 5 espaces, 5 caractères et 5 espaces est valide", () =>{
+        let control = { value: '     xxxxx     ' }
+        let validatorFn = VerifierCaracteresValidator.longueurMinimum(3);
+        let result= validatorFn(control as AbstractControl);
+        expect(result).toBe(null);
+    });
+
    
 });
