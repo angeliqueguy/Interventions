@@ -39,5 +39,12 @@ describe('longueur zone Validator', () => {
         expect(result['nbreCaracteresInsuffisant']).toBe(true);
     });
 
+    it("#12 | Une phrase avec 3 espaces et 3 caractères est valide", () =>{
+        let control = { value: '   xxx' }
+        let validatorFn = VerifierCaracteresValidator.longueurMinimum(3);
+        let result= validatorFn(control as AbstractControl);
+        expect(result).toBe(null);
+    });
+
    
 });
