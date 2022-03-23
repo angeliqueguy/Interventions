@@ -25,16 +25,64 @@ ngOnInit(): void {
     prenom: ['' , [Validators.required, VerifierCaracteresValidator.longueurMinimum(3)]],
     nom: ['', [Validators.required, Validators.maxLength(50)]],
     noTypeProbleme: ['', Validators.required],
+    telephone: [{value: '', disabled: true}],
     courrielGroup: this.fb.group({
     courriel: [{value: '', disabled: true}],
-    courrielConfirmation: [{value: '', disabled: true}],
-    }),
-    telephone: [{value: '', disabled: true}]
-    });
+      courrielConfirmation: [{value: '', disabled: true}],
+    })
+
+  });
+
+
 this.typeproblemeService.obtenirTypesProbleme()
 .subscribe(typesP => this.typesProb = typesP,
 error => this.errorMessage = <any>error);
 }
+
+
+appliquerNotifications(typeNotification: string): void {
+  const courrielControl = this.problemeForm.get('courrielGroup.courriel');
+  const courrielConfirmationControl = this.problemeForm.get('courrielGroup.courrielConfirmation');   
+  const courrielGroupControl = this.problemeForm.get('courrielGroup'); 
+  const telephoneControl = this.problemeForm.get('telephone');     
+
+  // Tous remettre à zéro
+  courrielControl.clearValidators();
+  courrielControl.reset();  // Pour enlever les messages d'erreur si le controle contenait des données invaldides
+  courrielControl.disable();  
+
+  courrielConfirmationControl.clearValidators();
+  courrielConfirmationControl.reset();    
+  courrielConfirmationControl.disable();
+
+  telephoneControl.clearValidators();
+  telephoneControl.reset();    
+  telephoneControl.disable();
+
+
+  if (typeNotification === 'ParCourriel') {   
+    courrielControl.setValidators([Validators.required]);      
+    courrielControl.enable();  
+    courrielConfirmationControl.setValidators([Validators.required]);              
+    courrielConfirmationControl.enable(); 
+
+    // Si le validateur est dans un autre fichier l'écire sous la forme suivante : 
+    // ...Validators.compose([classeDuValidateur.NomDeLaMethode()])])
+
+    //courrielGroupControl.setValidators([Validators.compose([])]);                       
+}   
+else
+{
+if(typeNotification === 'Inconnu')
+{
+  courrielControl.setValidators([Validators.required]);      
+  courrielControl.disable();           
+}
+}
+  courrielControl.updateValueAndValidity();   
+  courrielConfirmationControl.updateValueAndValidity(); 
+  telephoneControl.updateValueAndValidity();         
+  }
 
 
 
