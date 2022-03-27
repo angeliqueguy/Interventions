@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { emailMatcherValidator } from '../shared/email-matcher/email-matcher.component';
 import { VerifierCaracteresValidator } from '../shared/longueur-minimum/longueur-minimum.component';
 import { ITypeProbleme } from './typesprobleme';
 import { TypesproblemeService } from './typesprobleme.service';
@@ -27,7 +28,7 @@ ngOnInit(): void {
     noTypeProbleme: ['', Validators.required],
     telephone: [{value: '', disabled: true}],
     courrielGroup: this.fb.group({
-    courriel: [{value: '', disabled: true}],
+      courriel: [{value: '', disabled: true}],
       courrielConfirmation: [{value: '', disabled: true}],
     })
 
@@ -62,14 +63,15 @@ appliquerNotifications(typeNotification: string): void {
 
   if (typeNotification === 'ParCourriel') {   
     courrielControl.setValidators([Validators.required]);      
-    courrielControl.enable();  
+    courrielControl.enable(); 
+     
     courrielConfirmationControl.setValidators([Validators.required]);              
     courrielConfirmationControl.enable(); 
 
     // Si le validateur est dans un autre fichier l'écire sous la forme suivante : 
-    // ...Validators.compose([classeDuValidateur.NomDeLaMethode()])])
+    //Validators.compose([emailMatcherValidator.courrielDifferents()]);
 
-    //courrielGroupControl.setValidators([Validators.compose([])]);                       
+    courrielGroupControl.setValidators([Validators.compose([emailMatcherValidator.courrielDifferents()])]);                       
 }   
 else
 {
@@ -81,6 +83,7 @@ if(typeNotification === 'Inconnu')
 }
   courrielControl.updateValueAndValidity();   
   courrielConfirmationControl.updateValueAndValidity(); 
+  courrielGroupControl.updateValueAndValidity();
   telephoneControl.updateValueAndValidity();         
   }
 
