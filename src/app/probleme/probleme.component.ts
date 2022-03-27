@@ -75,6 +75,12 @@ appliquerNotifications(typeNotification: string): void {
 }   
 else
 {
+if(typeNotification === 'ParTelephone')
+{
+  telephoneControl.setValidators([Validators.required,Validators.pattern('[0-9+]'),Validators.minLength(10), Validators.maxLength(10)]);      
+  telephoneControl.enable();       
+}
+
 if(typeNotification === 'Inconnu')
 {
   courrielControl.setValidators([Validators.required]);      
