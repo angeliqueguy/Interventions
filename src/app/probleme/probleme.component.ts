@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { __values } from 'tslib';
 import { emailMatcherValidator } from '../shared/email-matcher/email-matcher.component';
 import { VerifierCaracteresValidator } from '../shared/longueur-minimum/longueur-minimum.component';
 import { ITypeProbleme } from './typesprobleme';
@@ -25,6 +26,7 @@ ngOnInit(): void {
   this.problemeForm = this.fb.group({
     prenom: ['' , [Validators.required, VerifierCaracteresValidator.longueurMinimum(3)]],
     nom: ['', [Validators.required, Validators.maxLength(50)]],
+    notification: ['NePasNotifier'],
     noTypeProbleme: ['', Validators.required],
     telephone: [{value: '', disabled: true}],
     courrielGroup: this.fb.group({
@@ -35,9 +37,12 @@ ngOnInit(): void {
   });
 
 
-this.typeproblemeService.obtenirTypesProbleme()
-.subscribe(typesP => this.typesProb = typesP,
-error => this.errorMessage = <any>error);
+  this.typeproblemeService.obtenirTypesProbleme()
+  .subscribe(typesP => this.typesProb = typesP,
+  error => this.errorMessage = <any>error);
+
+  this.problemeForm.get('notification').valueChanges
+  .subscribe(value => this.appliquerNotifications(value));
 }
 
 
@@ -62,7 +67,7 @@ appliquerNotifications(typeNotification: string): void {
 
 
   if (typeNotification === 'ParCourriel') {   
-    courrielControl.setValidators([Validators.required]);      
+    courrielControl.setValidators([Validators.required,Validators.pattern('[a-z0-9._%+-]+@[a-z0-9.-]+')]);      
     courrielControl.enable(); 
      
     courrielConfirmationControl.setValidators([Validators.required]);              
@@ -77,7 +82,7 @@ else
 {
 if(typeNotification === 'ParTelephone')
 {
-  telephoneControl.setValidators([Validators.required,Validators.pattern('[0-9+]'),Validators.minLength(10), Validators.maxLength(10)]);      
+  telephoneControl.setValidators([Validators.required,Validators.minLength(10), Validators.maxLength(10), Validators.pattern('[0-9]+')]);      
   telephoneControl.enable();       
 }
 
