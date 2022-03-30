@@ -32,7 +32,10 @@ ngOnInit(): void {
     courrielGroup: this.fb.group({
       courriel: [{value: '', disabled: true}],
       courrielConfirmation: [{value: '', disabled: true}],
-    })
+    }),
+    descriptionProbleme: ['', [Validators.required, Validators.minLength(5)]],
+    dateProbleme: {value: Date(), disabled: true},
+    noUnite: ['']
 
   });
 
