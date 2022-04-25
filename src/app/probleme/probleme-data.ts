@@ -42,6 +42,6 @@ export class ProblemeData implements InMemoryDbService, InMemoryBackendConfig {
             }
         ];       
         //return { probleme, typesprobleme};
-        return {typesprobleme};        
+        return {typesprobleme};        //TP23
     }
 }

@@ -7,18 +7,19 @@ import { catchError, tap } from 'rxjs/operators';
 @Injectable({
   providedIn: 'root'
 })
-export class TypesproblemeService {
+export class TypeProblemeService {
 
-  private baseUrl = 'api/typesprobleme';
+  //private baseUrl = 'api/typesprobleme';
+  private baseUrl = 'https://localhost:7260/Intervention'; //TP23
 
   constructor(private _http: HttpClient) { }
 
 
 
 obtenirTypesProbleme(): Observable<ITypeProbleme[]> {
-return this._http.get<ITypeProbleme[]>(this.baseUrl).pipe(
-tap(data => console.log('obtenirTypesProbleme: ' + JSON.stringify(data))),
-catchError(this.handleError)
+  return this._http.get<ITypeProbleme[]>(this.baseUrl).pipe(
+  tap(data => console.log('obtenirTypesProbleme: ' + JSON.stringify(data))),
+  catchError(this.handleError)
 );
 }
 
