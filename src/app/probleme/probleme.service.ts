@@ -6,7 +6,8 @@ import { IProbleme } from "./probleme";
 @Injectable({ providedIn: 'root' }) //https://blog.zimbaroos.in/post/2021/03/29/error-uncaught-in-promise-nullinjectorerror-angular-not-able-to-find-custom-service
 export class ProblemeService {
 
-private baseUrl = 'https://localhost:7260/Intervention';
+//private baseUrl = 'https://localhost:7260/Intervention';
+private baseUrl = 'https://interventionsag2022.azurewebsites.net/Intervention';
 
 constructor(private _http: HttpClient) { }
 

@@ -10,7 +10,8 @@ import { catchError, tap } from 'rxjs/operators';
 export class TypeProblemeService {
 
   //private baseUrl = 'api/typesprobleme';
-  private baseUrl = 'https://localhost:7260/Intervention'; //TP23
+  //private baseUrl = 'https://localhost:7260/Intervention'; //TP23
+  private baseUrl = 'https://interventionsag2022.azurewebsites.net/Intervention'; //TP32
 
   constructor(private _http: HttpClient) { }
 
